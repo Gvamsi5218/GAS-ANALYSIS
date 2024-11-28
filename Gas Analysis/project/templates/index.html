@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Monitoring</title>
+</head>
+<body>
+    <h1>Health Monitoring System</h1>
+    <button onclick="checkHealth()">Check Health</button>
+    <div id="output"></div>
+
+    <script>
+        async function checkHealth() {
+            const response = await fetch("/check", { method: "POST" });
+            const data = await response.json();
+            document.getElementById("output").innerHTML = `
+                <p>DHT11 Temp: ${data.temp_dht}°C</p>
+                <p>DS18B20 Temp: ${data.temp_ds}°C</p>
+                <p>${data.time_info}</p>
+                <p>${data.fever_alert}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
